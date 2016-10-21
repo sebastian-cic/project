@@ -19,17 +19,21 @@ public class ReadWriteData {
 	public ReadWriteData() {
 	}
 
+	private String exchange = "";
+	
 	public void readInCSVFile() {
 
-		//String path = "";
 		String output = "";
 		String line = "";
+
 		String[] splitCSVarray = new String[100000];
 		FileInputStream fstream = null;
+		
 		File[] listOfFiles = getAllFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
-			
+			exchange = getExchange(listOfFiles[i].toString());
+			System.out.println();
 			try {
 
 				// File inFile = new File(path);
@@ -77,10 +81,15 @@ public class ReadWriteData {
 	public void populate(String[] stockSplitIntoArray, Connection connection) {
 
 		PreparedStatement preparedStatement = null;
-
+		System.out.println(exchange);
+		if(exchange.equalsIgnoreCase("nasdaq")){
+			for (int i = 0; i < stockSplitIntoArray.length; i++) {
+				System.out.println(stockSplitIntoArray[i]);
+			}
+		}
 		try {
 
-			preparedStatement = connection.prepareStatement("insert into amex values(?,?,?,?,?,?,?)");
+			preparedStatement = connection.prepareStatement("insert into " + exchange + " values(?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, stockSplitIntoArray[0]);
 			preparedStatement.setDate(2, parseDate(stockSplitIntoArray[1]));
 			preparedStatement.setDouble(3, Double.parseDouble(stockSplitIntoArray[2]));
@@ -147,6 +156,12 @@ public class ReadWriteData {
 		
 		File file = new File("C:/Users/seb/Downloads/stocks");
 		return file.listFiles();
+	}
+	
+	public String getExchange(String nameOfExchange){
+		
+		return nameOfExchange.substring(nameOfExchange.lastIndexOf('\\') + 1, nameOfExchange.lastIndexOf('_'));
+		
 	}
 
 	/*public static void main(String[] args) {
