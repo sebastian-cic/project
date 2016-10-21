@@ -20,6 +20,7 @@ public class ReadWriteData {
 	}
 
 	private String exchange = "";
+	private String date = "";
 
 	/**
 	 * Method to open CSV files and parse to array of strings containing the
@@ -41,7 +42,6 @@ public class ReadWriteData {
 			// Get specific stock exchange name for each CSV file, used to enter
 			// into correct database table
 			exchange = getExchange(listOfFiles[i].toString());
-			System.out.println();
 			try {
 
 				// Read in file and split into array of strings
@@ -191,7 +191,7 @@ public class ReadWriteData {
 
 			pe.printStackTrace();
 		}
-
+	
 		return new java.sql.Date(parsed.getTime());
 	}
 
@@ -209,14 +209,72 @@ public class ReadWriteData {
 	/**
 	 * Retrieves substring of exchange type from CSV file path string.
 	 * 
-	 * @param nameOfExchange
+	 * @param stringContainingExchange
 	 *            string containing the file path of individual CSV file.
 	 * @return String representing stock exchange.
 	 */
-	public String getExchange(String nameOfExchange) {
+	public String getExchange(String stringContainingExchange) {
 
-		return nameOfExchange.substring(nameOfExchange.lastIndexOf('\\') + 1, nameOfExchange.lastIndexOf('_'));
+		return stringContainingExchange.substring(stringContainingExchange.lastIndexOf('\\') + 1,
+				stringContainingExchange.lastIndexOf('_'));
 
+	}
+
+	public Date getDate(String stringContainingDate) {
+		stringContainingDate = stringContainingDate.substring(stringContainingDate.lastIndexOf('_') + 1,
+				stringContainingDate.lastIndexOf('.'));
+
+		String day = stringContainingDate.substring(06);
+		day = day.replaceFirst("^0+(?!$)", "");
+
+		String month = stringContainingDate.substring(4, 6);
+
+		String year = stringContainingDate.substring(02, 04);
+		switch (month) {
+		case "01":
+			month = "jan";
+			break;
+		case "02":
+			month = "feb";
+			break;
+		case "03":
+			month = "mar";
+			break;
+		case "04":
+			month = "apr";
+			break;
+		case "05":
+			month = "may";
+			break;
+		case "06":
+			month = "jun";
+			break;
+		case "07":
+			month = "jul";
+			break;
+		case "08":
+			month = "aug";
+			break;
+		case "09":
+			month = "sep";
+			break;
+		case "10":
+			month = "oct";
+			break;
+		case "11":
+			month = "nov";
+			break;
+		case "12":
+			month = "dec";
+			break;
+
+		default:
+
+			System.out.println("date failed");
+			break;
+		}
+		stringContainingDate = day + "-" + month + "-" + year;
+		return parseDate(stringContainingDate);
 	}
 
 }
