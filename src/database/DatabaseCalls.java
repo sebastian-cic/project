@@ -76,4 +76,36 @@ public class DatabaseCalls
 		}
 		return result;
 	}
+	public ObservableList<String> getAllDates(){
+		JDBCConnection jdbcConnection = new JDBCConnection();
+		Connection connection = jdbcConnection.connectToDataBase();
+		ObservableList<String> list = FXCollections.observableArrayList();
+		
+		String query = "SELECT DISTINCT date FROM AMEX ORDER  BY date DESC";
+		java.sql.Statement statement;
+		try
+		{
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+			list.add(resultSet.getDate(1).toString());
+			}
+		} catch (SQLException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try
+		{
+			connection.close();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		for (int i = 0; i < list.size(); i++)
+		{
+			System.out.println(list.get(i));
+		}
+		return list;
+	}
 }

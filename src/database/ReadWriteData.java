@@ -134,7 +134,6 @@ public class ReadWriteData
 		{
 			e.printStackTrace();
 		}
-		
 
 	}
 
@@ -178,7 +177,5 @@ public class ReadWriteData
 
 		}
 	}
-	
-
 
 }
