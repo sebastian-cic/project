@@ -40,7 +40,8 @@ public class Controller {
 	        Close.setCellValueFactory(new PropertyValueFactory<Stock, String>("close"));
 	        Volume.setCellValueFactory(new PropertyValueFactory<Stock, String>("volume"));
 	        c2.setCellValueFactory(new PropertyValueFactory<Stock, String>("c2"));
-	        tableView.getItems().setAll(new ReadWriteData().getTable());
+	        tableView.getItems().setAll(new DatabaseCalls().getTable(new DatabaseCalls().getNewestDate()));
+	        System.out.println(new DatabaseCalls().getNewestDate());
 	        
 	    }
 	    private ObservableList<Stock> parseUserList2(){
