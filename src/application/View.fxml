@@ -40,13 +40,13 @@
             </MenuBar>
             <HBox>
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="NYSE">
+                  <RadioButton fx:id="amexRadioButton" mnemonicParsing="false" selected="true" text="Amex">
                      <toggleGroup>
                         <ToggleGroup fx:id="exchange" />
                      </toggleGroup></RadioButton>
-                  <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Amex" toggleGroup="$exchange" />
-                  <RadioButton layoutX="120.0" layoutY="10.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$exchange" />
-                  <RadioButton layoutX="230.0" layoutY="10.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$exchange" />
+                  <RadioButton fx:id="nyseRadioButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="NYSE" toggleGroup="$exchange" />
+                  <RadioButton fx:id="nasdaqRadioButton" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" text="Nasdaq" toggleGroup="$exchange" />
+                  <RadioButton fx:id="forexRadioButton" layoutX="230.0" layoutY="10.0" mnemonicParsing="false" text="Forex" toggleGroup="$exchange" />
                </children>
             </HBox>
          </children>
@@ -114,7 +114,6 @@
                <children>
                   <TextField />
                   <ChoiceBox prefWidth="150.0" />
-                  <Button mnemonicParsing="false" text="Button" />
                </children>
             </HBox>
          </children>
@@ -124,6 +123,14 @@
       <VBox BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="comboBox" prefWidth="220.0" snapToPixel="false" />
+            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button alignment="BASELINE_RIGHT" mnemonicParsing="false" onAction="#loadStockByDate" prefHeight="100.0" prefWidth="220.0" text="GET STOCKS BY DATE &amp; EXCHANGE" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </right>
