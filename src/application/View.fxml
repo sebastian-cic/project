@@ -82,16 +82,16 @@
       </VBox>
    </left>
    <center>
-      <TableView BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="Symbol" />
-          <TableColumn prefWidth="75.0" text="Date" />
-            <TableColumn prefWidth="75.0" text="Open" />
-            <TableColumn prefWidth="75.0" text="High" />
-            <TableColumn prefWidth="75.0" text="Low" />
-            <TableColumn prefWidth="75.0" text="Close" />
-            <TableColumn prefWidth="75.0" text="Volume" />
-            <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="Symbol" prefWidth="75.0" text="Symbol" />
+          <TableColumn fx:id="Date" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="Open" prefWidth="75.0" text="Open" />
+            <TableColumn fx:id="High" prefWidth="75.0" text="High" />
+            <TableColumn fx:id="Low" prefWidth="75.0" text="Low" />
+            <TableColumn fx:id="Close" prefWidth="75.0" text="Close" />
+            <TableColumn fx:id="Volume" prefWidth="75.0" text="Volume" />
+            <TableColumn fx:id="c2" prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
    </center>

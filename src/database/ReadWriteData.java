@@ -10,11 +10,18 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Arrays;
 
+import com.mysql.jdbc.Statement;
+import com.sun.crypto.provider.RC2Parameters;
+import com.sun.java_cup.internal.runtime.Symbol;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import stock.Stock;
 import util.DateAndFilesParsing;
 
 public class ReadWriteData
@@ -127,6 +134,7 @@ public class ReadWriteData
 		{
 			e.printStackTrace();
 		}
+		getTable();
 
 	}
 
@@ -141,7 +149,7 @@ public class ReadWriteData
 	 * @param connection
 	 *            JDBC connection.
 	 */
-	public void writeToDatabase(String[] stockSplitIntoArray, Connection connection)
+	private void writeToDatabase(String[] stockSplitIntoArray, Connection connection)
 	{
 
 		DateAndFilesParsing parsing = new DateAndFilesParsing();
@@ -169,6 +177,39 @@ public class ReadWriteData
 			e.printStackTrace();
 
 		}
+	}
+	
+	public ObservableList<Stock> getTable(){
+		JDBCConnection jdbcConnection = new JDBCConnection();
+		Connection connection = jdbcConnection.connectToDataBase();
+		ObservableList<Stock> list = FXCollections.observableArrayList();
+		{
+		};
+		String query = "select * from AMEX";
+	
+		try
+		{
+			java.sql.Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+				Stock stock = new Stock();
+				stock.setSymbol(resultSet.getString(1));
+				stock.setDate(resultSet.getDate(2).toString());
+				stock.setOpen(String.valueOf(resultSet.getDouble(3)));
+				stock.setHigh(String.valueOf(resultSet.getDouble(4)));
+				stock.setLow(String.valueOf(resultSet.getDouble(5)));
+				stock.setClose(String.valueOf(resultSet.getDouble(6)));
+				stock.setVolume(String.valueOf(resultSet.getInt(7)));
+				list.add(stock);
+			}
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	
 	}
 
 }
