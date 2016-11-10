@@ -7,7 +7,7 @@ public class Test {
 	public static void main(String[] args) {
 		ReadWriteData readWriteData = new ReadWriteData();
 		
-readWriteData.parseDate("15-sep-16");
+		readWriteData.parseDate("20160905","yyyyddmm");
 	}
 
 }

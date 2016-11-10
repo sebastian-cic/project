@@ -7,14 +7,33 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ReadWriteData {
+
+	public String getExchange() {
+		return exchange;
+	}
+
+	public void setExchange(String exchange) {
+		this.exchange = exchange;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	public ReadWriteData() {
 	}
@@ -30,10 +49,12 @@ public class ReadWriteData {
 
 		String output = "";
 		String line = "";
-
+		String[] split = new String[1000];
 		String[] splitCSVarray = new String[100000];
 		FileInputStream fstream = null;
-
+		JDBCConnection jdbcConnection = new JDBCConnection();
+		Connection connection = jdbcConnection.connectToDataBase();
+		String[] arrayOfIndividualStocks = new String[7];
 		// Get list of all CSV files from downloads directory.
 		File[] listOfFiles = getAllFiles();
 
@@ -57,6 +78,8 @@ public class ReadWriteData {
 				}
 
 				splitCSVarray = output.split(",");
+				//copy array and cut out header info ie "symbol, date,high etc"
+				splitCSVarray = Arrays.copyOfRange(splitCSVarray, 7, splitCSVarray.length);
 				output = "";
 				br.close();
 
@@ -80,8 +103,31 @@ public class ReadWriteData {
 				}
 
 			}
-			// Pass each CSV file to be written to database
-			writeToDB(splitCSVarray);
+			int dataColumnNumber = 0;
+			int countTotal = 0;
+			for (int j = 0; j < splitCSVarray.length; j++) {
+
+				// make array for each individual stock to pass to populate(),
+				// change to stock Object?
+				arrayOfIndividualStocks[dataColumnNumber] = splitCSVarray[j];
+				dataColumnNumber++;
+
+				// every 7 columns is 1 complete stock row, write to DB
+				if (dataColumnNumber == 7) {
+					populate(arrayOfIndividualStocks, connection);
+					dataColumnNumber = 0;
+					countTotal++;
+				}
+
+			}
+			System.out.println(countTotal);
+						// Pass each CSV file to be written to database
+			//writeToDB(splitCSVarray);
+		}
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -100,7 +146,7 @@ public class ReadWriteData {
 	public void populate(String[] stockSplitIntoArray, Connection connection) {
 
 		PreparedStatement preparedStatement = null;
-		System.out.println(exchange);
+		//System.out.println(exchange);
 
 		// Checks Global exchange variable thats obtained in readInCSVFiles()
 		// for the correct database table to write to
@@ -113,7 +159,7 @@ public class ReadWriteData {
 
 			preparedStatement = connection.prepareStatement("insert into " + exchange + " values(?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, stockSplitIntoArray[0]);
-			preparedStatement.setDate(2, parseDate(stockSplitIntoArray[1]));
+			preparedStatement.setDate(2, parseDate(stockSplitIntoArray[1],"dd-MMM-yy"));
 			preparedStatement.setDouble(3, Double.parseDouble(stockSplitIntoArray[2]));
 			preparedStatement.setDouble(4, Double.parseDouble(stockSplitIntoArray[3]));
 			preparedStatement.setDouble(5, Double.parseDouble(stockSplitIntoArray[4]));
@@ -135,7 +181,7 @@ public class ReadWriteData {
 	 * @param arrayOfallStocks
 	 *            String array of stock data.
 	 */
-	public void writeToDB(String[] arrayOfallStocks) {
+	/*public void writeToDB(String[] arrayOfallStocks) {
 
 		// dataColumnNumber used to keep track of how many rows of individual
 		// data have been read
@@ -146,8 +192,8 @@ public class ReadWriteData {
 		Connection connection = jdbcConnection.connectToDataBase();
 		String[] arrayOfIndividualStocks = new String[7];
 
-		// Skip first 7 elements for header info ie "symbol,low,high etc"
-		for (int i = 7; i < arrayOfallStocks.length; i++) {
+		
+		for (int i = 0; i < arrayOfallStocks.length; i++) {
 
 			// make array for each individual stock to pass to populate(),
 			// change to stock Object?
@@ -168,7 +214,7 @@ public class ReadWriteData {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Method to take string representation of date in format dd-MMM-yy and
@@ -178,20 +224,19 @@ public class ReadWriteData {
 	 *            string representation of date in format dd-MMM-yy.
 	 * @return java.sql.Date.
 	 */
-	public Date parseDate(String date) {
+	public Date parseDate(String date, String format) {
 
 		java.util.Date parsed = null;
-
 		try {
 
-			SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yy");
-			parsed = format.parse(date);
+			SimpleDateFormat f = new SimpleDateFormat(format);
+			parsed = f.parse(date);
 
 		} catch (ParseException pe) {
 
 			pe.printStackTrace();
 		}
-	
+		//System.out.println(parsed.getClass());
 		return new java.sql.Date(parsed.getTime());
 	}
 
@@ -274,7 +319,7 @@ public class ReadWriteData {
 			break;
 		}
 		stringContainingDate = day + "-" + month + "-" + year;
-		return parseDate(stringContainingDate);
+		return parseDate(stringContainingDate,"");
 	}
 
 }
