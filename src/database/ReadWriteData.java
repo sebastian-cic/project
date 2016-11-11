@@ -8,20 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.Arrays;
-
-import com.mysql.jdbc.Statement;
-import com.sun.crypto.provider.RC2Parameters;
-import com.sun.java_cup.internal.runtime.Symbol;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import stock.Stock;
 import util.DateAndFilesParsing;
 
 public class ReadWriteData
@@ -106,7 +95,7 @@ public class ReadWriteData
 			}
 
 			int dataColumnNumber = 0;
-			int countTotal = 0;
+			//int countTotal = 0;
 
 			for (int j = 0; j < splitCSVarray.length; j++)
 			{
@@ -121,11 +110,11 @@ public class ReadWriteData
 				{
 					writeToDatabase(arrayOfIndividualStocks, connection);
 					dataColumnNumber = 0;
-					countTotal++;
+					//countTotal++;
 				}
 
 			}
-			System.out.println(countTotal);
+			//System.out.println(countTotal);
 		}
 		try
 		{
@@ -153,7 +142,6 @@ public class ReadWriteData
 
 		DateAndFilesParsing parsing = new DateAndFilesParsing();
 		PreparedStatement preparedStatement = null;
-		System.out.println(exchange);
 
 		// Checks Global exchange variable thats obtained in readInCSVFiles()
 		// for the correct database table to write to

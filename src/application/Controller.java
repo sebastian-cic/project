@@ -45,6 +45,7 @@ public class Controller
 	@FXML
 	public void initialize()
 	{
+		//load amex data to table for most recent data
 		Symbol.setCellValueFactory(new PropertyValueFactory<Stock, String>("symbol"));
 		Date.setCellValueFactory(new PropertyValueFactory<Stock, String>("date"));
 		Open.setCellValueFactory(new PropertyValueFactory<Stock, String>("open"));
@@ -54,17 +55,25 @@ public class Controller
 		Volume.setCellValueFactory(new PropertyValueFactory<Stock, String>("volume"));
 		c2.setCellValueFactory(new PropertyValueFactory<Stock, String>("c2"));
 		tableView.getItems().setAll(new DatabaseCalls().getTable(new DatabaseCalls().getNewestDate()));
+		//get all available dates for stock data into combo box
 		comboBox.setItems(new DatabaseCalls().getAllDates());
 		comboBox.setValue("Date");
 	}
 
+	/**
+	 * load stock data from CSV files to database.File -> load CSV to database in menu bar
+	 */
 	public void loadCSVToDataBase()
 	{
 		System.out.println("loading");
 		ReadWriteData rw = new ReadWriteData();
 		rw.readInCSVFiles();
+		System.out.println("Finished loading data");
 	}
-
+	/**
+	 * Load data to table by date from combo box and exchange radio button
+	 * @param event
+	 */
 	public void loadStockByDate(ActionEvent event)
 	{
 		String exchange = "";
@@ -85,9 +94,6 @@ public class Controller
 		}
 		
 		date = comboBox.getSelectionModel().getSelectedItem().toString();
-		
-		System.out.println(exchange + date);
-		
 		
 		Symbol.setCellValueFactory(new PropertyValueFactory<Stock, String>("symbol"));
 		Date.setCellValueFactory(new PropertyValueFactory<Stock, String>("date"));

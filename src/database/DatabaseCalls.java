@@ -10,6 +10,11 @@ import stock.Stock;
 
 public class DatabaseCalls
 {
+	/**
+	 * Load Amex table by date
+	 * @param date
+	 * @return Observable list of stocks
+	 */
 	public ObservableList<Stock> getTable(String date)
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
@@ -51,7 +56,11 @@ public class DatabaseCalls
 		return list;
 
 	}
-
+	
+	/**
+	 * Get most recent date of available data from database. 
+	 * @return
+	 */
 	public String getNewestDate()
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
@@ -81,7 +90,11 @@ public class DatabaseCalls
 		}
 		return result;
 	}
-
+	
+	/**
+	 * Get all available dates of stock data
+	 * @return List of dates available 
+	 */
 	public ObservableList<String> getAllDates()
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
@@ -110,13 +123,12 @@ public class DatabaseCalls
 		{
 			e.printStackTrace();
 		}
-		for (int i = 0; i < list.size(); i++)
-		{
-			System.out.println(list.get(i));
-		}
 		return list;
 	}
 
+	/**
+	 * Get stock data by date and exchange. 
+	 */
 	public ObservableList<Stock> getStocksByDateAndExchange(String exchange, String date)
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
