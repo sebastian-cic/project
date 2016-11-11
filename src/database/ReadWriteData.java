@@ -7,10 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -71,6 +67,7 @@ public class ReadWriteData
 				splitCSVarray = Arrays.copyOfRange(splitCSVarray, 7, splitCSVarray.length);
 				output = "";
 				br.close();
+				// move file to backup directory
 				parsing.moveFile(listOfFiles[i]);
 			} catch (FileNotFoundException ex)
 			{
@@ -99,11 +96,10 @@ public class ReadWriteData
 			}
 
 			int dataColumnNumber = 0;
-			//int countTotal = 0;
 
 			for (int j = 0; j < splitCSVarray.length; j++)
 			{
-				
+
 				// make array for each individual stock to pass to populate(),
 				// change to stock Object?
 				arrayOfIndividualStocks[dataColumnNumber] = splitCSVarray[j];
@@ -112,16 +108,14 @@ public class ReadWriteData
 				// every 7 columns is 1 complete stock row, write to DB
 				if (dataColumnNumber == 7)
 				{
-				
-					
 					writeToDatabase(arrayOfIndividualStocks, connection);
 					dataColumnNumber = 0;
-					//countTotal++;
+					// countTotal++;
 				}
 
 			}
-			
-			//System.out.println(countTotal);
+
+			// System.out.println(countTotal);
 		}
 		try
 		{
@@ -130,7 +124,6 @@ public class ReadWriteData
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

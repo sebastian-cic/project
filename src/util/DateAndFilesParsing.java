@@ -63,7 +63,11 @@ public class DateAndFilesParsing
 		}
 		return new java.sql.Date(parsed.getTime());
 	}
-
+	/**
+	 * Move file to new directory after writing to database.
+	 * @param originalFile
+	 * @throws IOException
+	 */
 	public void moveFile(File originalFile) throws IOException
 	{
 		File file = new File("C:/Users/seb/Downloads/movedStocks/" + originalFile.toString().substring(30));

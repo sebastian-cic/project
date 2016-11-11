@@ -83,7 +83,7 @@
       </VBox>
    </left>
    <center>
-      <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" onMouseClicked="#getSpecificStock" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="Symbol" prefWidth="75.0" text="Symbol" />
           <TableColumn fx:id="Date" prefWidth="75.0" text="Date" />
