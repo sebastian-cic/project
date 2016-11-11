@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -166,4 +167,35 @@ public class DatabaseCalls
 		}
 		return list;
 	}
+	/*
+	public void checkForDuplicates( String exchange , String date){
+		
+		String query = "SELECT count(*) FROM amex WHERE date >='05-sep-2016'";;
+		JDBCConnection jdbcConnection = new JDBCConnection();
+		Connection connection = jdbcConnection.connectToDataBase();
+		ObservableList<Stock> list = FXCollections.observableArrayList();
+
+
+		try
+		{
+			java.sql.Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next())
+			{
+
+				System.out.println(resultSet.getString(1));
+			}
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try
+		{
+			connection.close();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}*/
 }
