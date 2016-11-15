@@ -70,31 +70,9 @@ public class DateAndFilesParsing
 	 */
 	public void moveFile(File originalFile) throws IOException
 	{
+		//substring starting at 30 to get CSV file name from original file passed in.
+		//string then appends to path of where the file is to be moved to.
 		File file = new File("C:/Users/seb/Downloads/movedStocks/" + originalFile.toString().substring(30));
 		Files.move(originalFile.toPath(), Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);
 	}
-	/*
-	 * public Date getDateFromFileName(String stringContainingDate) {
-	 * stringContainingDate =
-	 * stringContainingDate.substring(stringContainingDate.lastIndexOf('_') + 1,
-	 * stringContainingDate.lastIndexOf('.'));
-	 * 
-	 * String day = stringContainingDate.substring(06); day =
-	 * day.replaceFirst("^0+(?!$)", "");
-	 * 
-	 * String month = stringContainingDate.substring(4, 6);
-	 * 
-	 * String year = stringContainingDate.substring(02, 04); switch (month) {
-	 * case "01": month = "jan"; break; case "02": month = "feb"; break; case
-	 * "03": month = "mar"; break; case "04": month = "apr"; break; case "05":
-	 * month = "may"; break; case "06": month = "jun"; break; case "07": month =
-	 * "jul"; break; case "08": month = "aug"; break; case "09": month = "sep";
-	 * break; case "10": month = "oct"; break; case "11": month = "nov"; break;
-	 * case "12": month = "dec"; break;
-	 * 
-	 * default:
-	 * 
-	 * System.out.println("date failed"); break; } stringContainingDate = day +
-	 * "-" + month + "-" + year; return parseDate(stringContainingDate,""); }
-	 */
 }

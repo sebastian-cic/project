@@ -10,6 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import stock.Stock;
 
@@ -101,19 +102,24 @@ public class Controller
 
 		date = comboBox.getSelectionModel().getSelectedItem().toString();
 
-	
 		tableView.getItems().setAll(new DatabaseCalls().getStocksByDateAndExchange(exchange, date));
 	}
+
 	/**
-	 * Get all data for one stock by clicking on table column 
+	 * Get all data for one stock by clicking on table column
+	 * 
 	 * @param event
 	 */
-	public void getSpecificStock(MouseEvent event){
+	public void getSpecificStock(MouseEvent event)
+	{
 
 		String exchange = "";
 		Stock stock = new Stock();
+		Stock temp = null;
+		java.util.Date clicktime = null;
+
 		stock = tableView.getSelectionModel().getSelectedItem();
-		
+
 		if (amexRadioButton.isSelected())
 		{
 			exchange = "Amex";
@@ -128,9 +134,37 @@ public class Controller
 			exchange = "forex";
 		}
 
-		if(stock != null){
+		if (stock != null && event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY)
+		{
 			tableView.getItems().setAll(new DatabaseCalls().getSpecificStock(exchange, stock.getSymbol()));
 		}
+	}
+
+	public void printMA(ActionEvent actionEvent)
+	{
+		String exchange = "";
+		String date = "";
+
+		if (amexRadioButton.isSelected())
+		{
+			exchange = "Amex";
+		} else if (nyseRadioButton.isSelected())
+		{
+			exchange = "nyse";
+		} else if (nasdaqRadioButton.isSelected())
+		{
+			exchange = "nasdaq";
+		} else
+		{
+			exchange = "forex";
+		}
+
+		date = comboBox.getSelectionModel().getSelectedItem().toString();
+
+		System.out.println(exchange + "  " + date);
+
+		TechnicalSignals ts = new TechnicalSignals();
+		ts.simpleMovingAverage(10, exchange, date);
 	}
 
 }
