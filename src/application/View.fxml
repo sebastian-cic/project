@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -99,20 +100,33 @@
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox>
+            <HBox prefHeight="0.0" prefWidth="1496.0">
                <children>
-                  <TextField />
-                  <TextField layoutX="10.0" layoutY="10.0" />
-                  <TextField layoutX="10.0" layoutY="10.0" />
-                  <TextField layoutX="10.0" layoutY="10.0" />
-                  <TextField layoutX="120.0" layoutY="10.0" />
-                  <TextField layoutX="98.0" layoutY="10.0" />
-                  <TextField layoutX="83.0" layoutY="10.0" />
+                  <Label prefHeight="21.0" prefWidth="188.0" style="-fx-background-color: #99ccff;" text="Symbol" />
+                  <Label prefHeight="21.0" prefWidth="192.0" style="-fx-background-color: #99ccff;" text="Date" />
+                  <Label prefHeight="21.0" prefWidth="188.0" style="-fx-background-color: #99ccff;" text="Open" />
+                  <Label layoutX="388.0" layoutY="10.0" prefHeight="21.0" prefWidth="189.0" style="-fx-background-color: #99ccff;" text="High" />
+                  <Label layoutX="581.0" layoutY="10.0" prefHeight="21.0" prefWidth="188.0" style="-fx-background-color: #99ccff;" text="Low" />
+                  <Label layoutX="764.0" layoutY="10.0" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #99ccff;" text="Close" />
+                  <Label layoutX="947.0" layoutY="10.0" prefHeight="21.0" prefWidth="190.0" style="-fx-background-color: #99ccff;" text="Volume" />
+                  <Label layoutX="1129.0" layoutY="10.0" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #99ccff;" text="Placeholder" />
                </children>
             </HBox>
             <HBox>
                <children>
+                  <TextField fx:id="symbolText" editable="false" promptText="Symbol" />
+                  <TextField fx:id="dateText" editable="false" layoutX="10.0" layoutY="10.0" promptText="Date" />
+                  <TextField fx:id="openText" editable="false" layoutX="10.0" layoutY="10.0" promptText="Open" />
+                  <TextField fx:id="highText" editable="false" layoutX="10.0" layoutY="10.0" promptText="High" />
+                  <TextField fx:id="lowText" editable="false" layoutX="120.0" layoutY="10.0" promptText="Low" />
+                  <TextField fx:id="closeText" editable="false" layoutX="98.0" layoutY="10.0" promptText="Close" />
+                  <TextField fx:id="volumeText" editable="false" layoutX="83.0" layoutY="10.0" promptText="Volume" />
                   <TextField />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <TextField fx:id="exchangeText" editable="false" promptText="Exchange" />
                   <ChoiceBox prefWidth="150.0" />
                </children>
             </HBox>

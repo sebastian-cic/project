@@ -1,5 +1,7 @@
 package application;
 
+import javax.swing.plaf.basic.BasicLabelUI;
+
 import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 import database.*;
@@ -9,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -45,6 +48,22 @@ public class Controller
 	private RadioButton nasdaqRadioButton;
 	@FXML
 	private RadioButton forexRadioButton;
+	@FXML
+	private TextField symbolText;
+	@FXML
+	private TextField dateText;
+	@FXML
+	private TextField openText;
+	@FXML
+	private TextField highText;
+	@FXML
+	private TextField lowText;
+	@FXML
+	private TextField closeText;
+	@FXML
+	private TextField volumeText;
+	@FXML
+	private TextField exchangeText;
 
 	@FXML
 	public void initialize()
@@ -106,18 +125,14 @@ public class Controller
 	}
 
 	/**
-	 * Get all data for one stock by clicking on table column
+	 * Get all data for one stock by double clicking on table column
 	 * 
 	 * @param event
 	 */
 	public void getSpecificStock(MouseEvent event)
 	{
-
 		String exchange = "";
 		Stock stock = new Stock();
-		Stock temp = null;
-		java.util.Date clicktime = null;
-
 		stock = tableView.getSelectionModel().getSelectedItem();
 
 		if (amexRadioButton.isSelected())
@@ -133,10 +148,23 @@ public class Controller
 		{
 			exchange = "forex";
 		}
-
+		//Primary button double clicked, excluding header cells.
 		if (stock != null && event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY)
 		{
 			tableView.getItems().setAll(new DatabaseCalls().getSpecificStock(exchange, stock.getSymbol()));
+		}else if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
+			
+			//Stock stock = new Stock();
+			stock = tableView.getSelectionModel().getSelectedItem();
+			
+			symbolText.setText(stock.getSymbol());
+			dateText.setText(stock.getDate());
+			openText.setText(stock.getOpen());
+			highText.setText(stock.getHigh()); 
+			lowText.setText(stock.getLow());
+			closeText.setText(stock.getClose());
+			volumeText.setText(stock.getVolume());
+			exchangeText.setText(exchange);
 		}
 	}
 
@@ -162,7 +190,7 @@ public class Controller
 		date = comboBox.getSelectionModel().getSelectedItem().toString();
 
 		System.out.println(exchange + "  " + date);
-
+		symbolText.setText("yo");
 		TechnicalSignals ts = new TechnicalSignals();
 		ts.simpleMovingAverage(10, exchange, date);
 	}
