@@ -19,7 +19,7 @@ public class TechnicalSignals
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
 		Connection connection = jdbcConnection.connectToDataBase();
-		String query2 = "select avg(close) from " + exchange +  " where date <='" + date +"' AND symbol ='"+ symbol+"' ORDER BY date DESC LIMIT "+ days ;		
+		String query2 = "select round(avg(close),4) from " + exchange +  " where date <='" + date +"' AND symbol ='"+ symbol+"' ORDER BY date DESC LIMIT "+ days ;		
 		try
 		{
 			java.sql.Statement statement = connection.createStatement();
