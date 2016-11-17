@@ -1,8 +1,5 @@
 package application;
 
-import javax.swing.plaf.basic.BasicLabelUI;
-
-import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 import database.*;
 import javafx.event.ActionEvent;
@@ -192,7 +189,7 @@ public class Controller
 		System.out.println(exchange + "  " + date);
 		symbolText.setText("yo");
 		TechnicalSignals ts = new TechnicalSignals();
-		ts.simpleMovingAverage(10, exchange, date);
+		ts.simpleMovingAverage(10, exchange, date, "aau");
 	}
 
 }
