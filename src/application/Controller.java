@@ -1,6 +1,5 @@
 package application;
 
-
 import database.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,6 +77,7 @@ public class Controller
 		// get all available dates for stock data into combo box
 		comboBox.setItems(new DatabaseCalls().getAllDates());
 		comboBox.setValue("Date");
+		comboBox.getSelectionModel().selectFirst();
 	}
 
 	/**
@@ -145,19 +145,20 @@ public class Controller
 		{
 			exchange = "forex";
 		}
-		//Primary button double clicked, excluding header cells.
+		// Primary button double clicked, excluding header cells.
 		if (stock != null && event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY)
 		{
 			tableView.getItems().setAll(new DatabaseCalls().getSpecificStock(exchange, stock.getSymbol()));
-		}else if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
-			
-			//Stock stock = new Stock();
+		} else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1)
+		{
+
+			// Stock stock = new Stock();
 			stock = tableView.getSelectionModel().getSelectedItem();
-			
+
 			symbolText.setText(stock.getSymbol());
 			dateText.setText(stock.getDate());
 			openText.setText(stock.getOpen());
-			highText.setText(stock.getHigh()); 
+			highText.setText(stock.getHigh());
 			lowText.setText(stock.getLow());
 			closeText.setText(stock.getClose());
 			volumeText.setText(stock.getVolume());
@@ -186,10 +187,9 @@ public class Controller
 
 		date = comboBox.getSelectionModel().getSelectedItem().toString();
 
-		System.out.println(exchange + "  " + date);
-		symbolText.setText("yo");
 		TechnicalSignals ts = new TechnicalSignals();
 		ts.simpleMovingAverage(10, exchange, date, "aau");
+		// ts.getMACrossover("aau", "amex");
 	}
 
 }
