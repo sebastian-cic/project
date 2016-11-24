@@ -13,6 +13,7 @@ public class DatabaseCalls
 {
 	/**
 	 * Load Amex table by date
+	 * 
 	 * @param date
 	 * @return Observable list of stocks
 	 */
@@ -21,9 +22,6 @@ public class DatabaseCalls
 		JDBCConnection jdbcConnection = new JDBCConnection();
 		Connection connection = jdbcConnection.connectToDataBase();
 		ObservableList<Stock> list = FXCollections.observableArrayList();
-		{
-		}
-		;
 		String query = "select * from AMEX where date ='" + date + "'";
 
 		try
@@ -42,24 +40,27 @@ public class DatabaseCalls
 				stock.setVolume(String.valueOf(resultSet.getInt(7)));
 				list.add(stock);
 			}
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try
-		{
-			connection.close();
+
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				connection.close();
+			} catch (Exception e2)
+			{
+				// TODO: handle exception
+			}
 		}
 		return list;
 
 	}
-	
+
 	/**
-	 * Get most recent date of available data from database. 
+	 * Get most recent date of available data from database.
+	 * 
 	 * @return
 	 */
 	public String getNewestDate()
@@ -69,32 +70,36 @@ public class DatabaseCalls
 		String query = "SELECT * FROM AMEX ORDER  BY date DESC LIMIT  1";
 		java.sql.Statement statement;
 		String result = "";
+
 		try
 		{
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
+
 			while (resultSet.next())
 			{
 				result = resultSet.getDate(2).toString();
 			}
 		} catch (SQLException e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-		try
+		} finally
 		{
-			connection.close();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				connection.close();
+			} catch (Exception e2)
+			{
+				e2.printStackTrace();
+			}
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Get all available dates of stock data
-	 * @return List of dates available 
+	 * 
+	 * @return List of dates available
 	 */
 	public ObservableList<String> getAllDates()
 	{
@@ -116,25 +121,29 @@ public class DatabaseCalls
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-		try
+		} finally
 		{
-			connection.close();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				connection.close();
+			} catch (Exception e2)
+			{
+				e2.printStackTrace();
+			}
 		}
+
 		return list;
 	}
 
 	/**
-	 * Get stock data by date and exchange. 
+	 * Get stock data by date and exchange.
 	 */
 	public ObservableList<Stock> getStocksByDateAndExchange(String exchange, String date)
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
 		Connection connection = jdbcConnection.connectToDataBase();
 		ObservableList<Stock> list = FXCollections.observableArrayList();
+
 		String query = "select * from " + exchange + " where date ='" + date + "'";
 
 		try
@@ -157,19 +166,20 @@ public class DatabaseCalls
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try
+		} finally
 		{
-			connection.close();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				connection.close();
+			} catch (Exception e2)
+			{
+				e2.printStackTrace();
+			}
 		}
+
 		return list;
 	}
-	
-	
-	
+
 	public ObservableList<Stock> getSpecificStock(String exchange, String symbol)
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
@@ -197,45 +207,34 @@ public class DatabaseCalls
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try
+		} finally
 		{
-			connection.close();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				connection.close();
+			} catch (Exception e2)
+			{
+				e2.printStackTrace();
+			}
 		}
+
 		return list;
 	}
 	/*
-	public void checkForDuplicates( String exchange , String date){
-		
-		String query = "SELECT count(*) FROM amex WHERE date >='05-sep-2016'";;
-		JDBCConnection jdbcConnection = new JDBCConnection();
-		Connection connection = jdbcConnection.connectToDataBase();
-		ObservableList<Stock> list = FXCollections.observableArrayList();
-
-
-		try
-		{
-			java.sql.Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-			while (resultSet.next())
-			{
-
-				System.out.println(resultSet.getString(1));
-			}
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try
-		{
-			connection.close();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}*/
+	 * public void checkForDuplicates( String exchange , String date){
+	 * 
+	 * String query = "SELECT count(*) FROM amex WHERE date >='05-sep-2016'";;
+	 * JDBCConnection jdbcConnection = new JDBCConnection(); Connection
+	 * connection = jdbcConnection.connectToDataBase(); ObservableList<Stock>
+	 * list = FXCollections.observableArrayList();
+	 * 
+	 * 
+	 * try { java.sql.Statement statement = connection.createStatement();
+	 * ResultSet resultSet = statement.executeQuery(query); while
+	 * (resultSet.next()) {
+	 * 
+	 * System.out.println(resultSet.getString(1)); } } catch (SQLException e) {
+	 * // TODO Auto-generated catch block e.printStackTrace(); } try {
+	 * connection.close(); } catch (SQLException e) { e.printStackTrace(); } }
+	 */
 }

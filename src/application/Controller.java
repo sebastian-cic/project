@@ -188,8 +188,8 @@ public class Controller
 		date = comboBox.getSelectionModel().getSelectedItem().toString();
 
 		TechnicalSignals ts = new TechnicalSignals();
-		ts.simpleMovingAverage(10, exchange, date, "aau");
-		// ts.getMACrossover("aau", "amex");
+		//ts.simpleMovingAverage(10, exchange, date, "aau");
+		ts.getMACrossover("aau", "amex");
 	}
 
 }
