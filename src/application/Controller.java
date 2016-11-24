@@ -126,7 +126,7 @@ public class Controller
 	 * 
 	 * @param event
 	 */
-	public void getSpecificStock(MouseEvent event)
+	public void selectStockOnMouseClick(MouseEvent event)
 	{
 		String exchange = "";
 		Stock stock = new Stock();
@@ -187,7 +187,7 @@ public class Controller
 
 		TechnicalSignals ts = new TechnicalSignals();
 		//ts.simpleMovingAverage(10, exchange, date, "aau");
-		ts.getMACrossover("aau", "amex");
+		ts.getMACrossover(10, "amex",date ,"aau" );;
 	}
 
 }
