@@ -149,10 +149,8 @@ public class Controller
 		if (stock != null && event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY)
 		{
 			tableView.getItems().setAll(new DatabaseCalls().getSpecificStock(exchange, stock.getSymbol()));
-		} else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1)
+		} else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1 && stock != null)
 		{
-
-			// Stock stock = new Stock();
 			stock = tableView.getSelectionModel().getSelectedItem();
 
 			symbolText.setText(stock.getSymbol());
