@@ -37,6 +37,8 @@ public class Controller
 	@FXML
 	private TableColumn<Stock, String> c2;
 	@FXML
+	private TableColumn<Stock, String> crossOver;
+	@FXML
 	private ComboBox<String> comboBox;
 	@FXML
 	private RadioButton amexRadioButton;
@@ -75,6 +77,7 @@ public class Controller
 		Close.setCellValueFactory(new PropertyValueFactory<Stock, String>("close"));
 		Volume.setCellValueFactory(new PropertyValueFactory<Stock, String>("volume"));
 		c2.setCellValueFactory(new PropertyValueFactory<Stock, String>("c2"));
+		crossOver.setCellValueFactory(new PropertyValueFactory<Stock, String>("crossOver"));
 		//????
 		tableView.getItems().setAll(new DatabaseCalls().getTable(new DatabaseCalls().getNewestDate()));
 		// get all available dates for stock data into combo box
@@ -190,7 +193,8 @@ public class Controller
 
 		TechnicalSignals ts = new TechnicalSignals();
 		//ts.simpleMovingAverage(10, exchange, date, "aau");
-		ts.getMACrossover(10, "amex",date ,"aau" );;
+		//ts.getMACrossover(10, "amex",date ,"aau" );;
+		ts.getCross(exchange, date, "aau");
 	}
 
 }

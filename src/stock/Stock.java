@@ -7,70 +7,87 @@ public class Stock
 	{
 		super();
 	}
+
 	public String getSymbol()
 	{
 		return symbol;
 	}
+
 	public void setSymbol(String symbol)
 	{
 		this.symbol = symbol;
 	}
+
 	public String getDate()
 	{
 		return date;
 	}
+
 	public void setDate(String date)
 	{
 		this.date = date;
 	}
+
 	public String getOpen()
 	{
 		return open;
 	}
+
 	public void setOpen(String open)
 	{
 		this.open = open;
 	}
+
 	public String getHigh()
 	{
 		return high;
 	}
+
 	public void setHigh(String high)
 	{
 		this.high = high;
 	}
+
 	public String getLow()
 	{
 		return low;
 	}
+
 	public void setLow(String low)
 	{
 		this.low = low;
 	}
+
 	public String getClose()
 	{
 		return close;
 	}
+
 	public void setClose(String close)
 	{
 		this.close = close;
 	}
+
 	public String getVolume()
 	{
 		return volume;
 	}
+
 	public void setVolume(String volume)
 	{
 		this.volume = volume;
 	}
+
 	public String getC2()
 	{
 		return ma;
 	}
+
 	public void setC2(String c2)
 	{
 		this.ma = c2;
 	}
+
 	public Stock(String symbol, String date, String open, String high, String low, String close, String volume,
 			String c2)
 	{
@@ -83,6 +100,7 @@ public class Stock
 		this.volume = volume;
 		this.ma = c2;
 	}
+
 	public String symbol;
 	public String date;
 	public String open;
@@ -91,4 +109,25 @@ public class Stock
 	public String close;
 	public String volume;
 	public String ma;
+	public String crossOver;
+
+	public String getMa()
+	{
+		return ma;
+	}
+
+	public void setMa(String ma)
+	{
+		this.ma = ma;
+	}
+
+	public String getCrossOver()
+	{
+		return crossOver;
+	}
+
+	public void setCrossOver(String crossOver)
+	{
+		this.crossOver = crossOver;
+	}
 }

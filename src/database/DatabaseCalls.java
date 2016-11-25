@@ -202,6 +202,7 @@ public class DatabaseCalls
 				stock.setClose(String.valueOf(resultSet.getDouble(6)));
 				stock.setVolume(String.valueOf(resultSet.getInt(7)));
 				stock.setC2(new TechnicalSignals().simpleMovingAverage(10, exchange, resultSet.getDate(2).toString(), symbol));
+				stock.setCrossOver(new TechnicalSignals().getCross(exchange,resultSet.getDate(2).toString(), symbol));
 				list.add(stock);
 			}
 		} catch (SQLException e)
