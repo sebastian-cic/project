@@ -18,7 +18,7 @@ public class TechnicalSignals
 		JDBCConnection jdbcConnection = new JDBCConnection();
 		Connection connection = jdbcConnection.connectToDataBase();
 
-		String query = "select round(avg(close),4) from " + exchange + " where date <='" + date + "' AND symbol ='"
+		String query = "select round(avg(close),2) from " + exchange + " where date <='" + date + "' AND symbol ='"
 				+ symbol + "' ORDER BY date DESC LIMIT " + days;
 		String query2 = "select count(*) from " + exchange + " where date <='" + date + "' AND symbol ='" + symbol
 				+ "' ORDER BY date DESC";
@@ -58,41 +58,58 @@ public class TechnicalSignals
 		return "";
 	}
 
-	public void getMACrossover(String symbol, String exchange)
+	public void getMACrossover(Integer days, String exchange, String date, String symbol)
 	{
+		int count = 0;
 		double movingAVG = 0;
-		double closePrice;
+		double previousPrice;
+		boolean above = false;
+		boolean below = false;
 
 		JDBCConnection jdbcConnection = new JDBCConnection();
 		Connection connection = jdbcConnection.connectToDataBase();
+
 		String query = "select * from " + exchange + " where symbol = '" + symbol + "' ORDER BY date ASC";
+
 		try
 		{
 			java.sql.Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next())
 			{
-				try
+				count++;
+				if (count >= days)
 				{
-					movingAVG = Double.parseDouble(simpleMovingAverage(10, "amex", resultSet.getString(2), "aau"));
-				} catch (NumberFormatException e)
-				{
-					System.out.println("not enough days");
+					try
+					{
+						movingAVG = Double.parseDouble(simpleMovingAverage(10, "amex", resultSet.getString(2), "aau"));
+					} catch (NumberFormatException e)
+					{
+						System.out.println("not enough days");
+					}
+					if(count == days && movingAVG >=  Double.parseDouble(resultSet.getString(6))){
+						above = true;	
+					}else if (count == days && movingAVG <  Double.parseDouble(resultSet.getString(6))) {
+						below = true;
+					}
+					if (movingAVG < Double.parseDouble(resultSet.getString(6)) && above)
+					{
+						System.out.println("above cross over");
+						above = false;
+						below = true;
+					} else if (movingAVG > Double.parseDouble(resultSet.getString(6)) && below)
+					{
+						System.out.println("below cross over");
+						above = true;
+						below = false;
+					} else
+					{
+						System.out.println("equal/ no cross over");
+					}
+					System.out.println("MA:" + simpleMovingAverage(10, "amex", resultSet.getString(2), "aau"));
+					System.out.println(resultSet.getString(6) + "******");
+					System.out.println(resultSet.getString(2));
 				}
-
-				if (movingAVG < Double.parseDouble(resultSet.getString(6)))
-				{
-					System.out.println("above ");
-				} else if (movingAVG > Double.parseDouble(resultSet.getString(6)))
-				{
-					System.out.println("below");
-				} else
-				{
-					System.out.println("equal");
-				}
-				System.out.println("MA:" + simpleMovingAverage(10, "amex", resultSet.getString(2), "aau"));
-				System.out.println(resultSet.getString(6) + "******");
-				System.out.println(resultSet.getString(2));
 			}
 		} catch (SQLException e)
 		{

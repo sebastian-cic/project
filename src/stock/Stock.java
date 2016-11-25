@@ -65,11 +65,11 @@ public class Stock
 	}
 	public String getC2()
 	{
-		return c2;
+		return ma;
 	}
 	public void setC2(String c2)
 	{
-		this.c2 = c2;
+		this.ma = c2;
 	}
 	public Stock(String symbol, String date, String open, String high, String low, String close, String volume,
 			String c2)
@@ -81,7 +81,7 @@ public class Stock
 		this.low = low;
 		this.close = close;
 		this.volume = volume;
-		this.c2 = c2;
+		this.ma = c2;
 	}
 	public String symbol;
 	public String date;
@@ -90,5 +90,5 @@ public class Stock
 	public String low;
 	public String close;
 	public String volume;
-	public String c2;
+	public String ma;
 }

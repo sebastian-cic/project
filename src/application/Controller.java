@@ -1,5 +1,7 @@
 package application;
 
+import org.omg.IOP.TAG_MULTIPLE_COMPONENTS;
+
 import database.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,10 +75,11 @@ public class Controller
 		Close.setCellValueFactory(new PropertyValueFactory<Stock, String>("close"));
 		Volume.setCellValueFactory(new PropertyValueFactory<Stock, String>("volume"));
 		c2.setCellValueFactory(new PropertyValueFactory<Stock, String>("c2"));
+		//????
 		tableView.getItems().setAll(new DatabaseCalls().getTable(new DatabaseCalls().getNewestDate()));
 		// get all available dates for stock data into combo box
 		comboBox.setItems(new DatabaseCalls().getAllDates());
-		comboBox.setValue("Date");
+		//comboBox.setValue("Date");
 		comboBox.getSelectionModel().selectFirst();
 	}
 
@@ -152,7 +155,7 @@ public class Controller
 		} else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1 && stock != null)
 		{
 			stock = tableView.getSelectionModel().getSelectedItem();
-
+			TechnicalSignals technicalSignals =  new TechnicalSignals();
 			symbolText.setText(stock.getSymbol());
 			dateText.setText(stock.getDate());
 			openText.setText(stock.getOpen());
