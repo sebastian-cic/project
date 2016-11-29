@@ -55,7 +55,6 @@ public class DatabaseCalls
 			}
 		}
 		return list;
-
 	}
 
 	/**
@@ -113,6 +112,7 @@ public class DatabaseCalls
 		{
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
+			
 			while (resultSet.next())
 			{
 				list.add(resultSet.getDate(1).toString());
@@ -131,7 +131,6 @@ public class DatabaseCalls
 				e2.printStackTrace();
 			}
 		}
-
 		return list;
 	}
 
@@ -143,7 +142,6 @@ public class DatabaseCalls
 		JDBCConnection jdbcConnection = new JDBCConnection();
 		Connection connection = jdbcConnection.connectToDataBase();
 		ObservableList<Stock> list = FXCollections.observableArrayList();
-
 		String query = "select * from " + exchange + " where date ='" + date + "'";
 
 		try
@@ -164,7 +162,6 @@ public class DatabaseCalls
 			}
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally
 		{
@@ -176,10 +173,16 @@ public class DatabaseCalls
 				e2.printStackTrace();
 			}
 		}
-
 		return list;
 	}
 
+	/**
+	 * Method to get data by stock name.
+	 * 
+	 * @param exchange
+	 * @param symbol
+	 * @return List of stocks
+	 */
 	public ObservableList<Stock> getSpecificStock(String exchange, String symbol)
 	{
 		JDBCConnection jdbcConnection = new JDBCConnection();
@@ -201,13 +204,13 @@ public class DatabaseCalls
 				stock.setLow(String.valueOf(resultSet.getDouble(5)));
 				stock.setClose(String.valueOf(resultSet.getDouble(6)));
 				stock.setVolume(String.valueOf(resultSet.getInt(7)));
-				stock.setC2(new TechnicalSignals().simpleMovingAverage(10, exchange, resultSet.getDate(2).toString(), symbol));
-				stock.setCrossOver(new TechnicalSignals().getCross(exchange,resultSet.getDate(2).toString(), symbol));
+				stock.setC2(new TechnicalSignals().simpleMovingAverage(10, exchange, resultSet.getDate(2).toString(),
+						symbol));
+				stock.setCrossOver(new TechnicalSignals().getCross(exchange, resultSet.getDate(2).toString(), symbol));
 				list.add(stock);
 			}
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally
 		{
@@ -219,7 +222,6 @@ public class DatabaseCalls
 				e2.printStackTrace();
 			}
 		}
-
 		return list;
 	}
 	/*

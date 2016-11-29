@@ -1,6 +1,6 @@
 package application;
 
-import org.omg.IOP.TAG_MULTIPLE_COMPONENTS;
+
 
 import database.*;
 import javafx.event.ActionEvent;
@@ -158,7 +158,6 @@ public class Controller
 		} else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1 && stock != null)
 		{
 			stock = tableView.getSelectionModel().getSelectedItem();
-			TechnicalSignals technicalSignals =  new TechnicalSignals();
 			symbolText.setText(stock.getSymbol());
 			dateText.setText(stock.getDate());
 			openText.setText(stock.getOpen());
@@ -192,9 +191,9 @@ public class Controller
 		date = comboBox.getSelectionModel().getSelectedItem().toString();
 
 		TechnicalSignals ts = new TechnicalSignals();
-		//ts.simpleMovingAverage(10, exchange, date, "aau");
+		ts.simpleMovingAverage(10, exchange, date, "aau");
 		//ts.getMACrossover(10, "amex",date ,"aau" );;
-		ts.getCross(exchange, date, "aau");
+		//ts.getCross(exchange, date, "aau");
 	}
 
 }

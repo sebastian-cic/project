@@ -3,6 +3,29 @@ package stock;
 public class Stock
 {
 
+	public String symbol;
+	public String date;
+	public String open;
+	public String high;
+	public String low;
+	public String close;
+	public String volume;
+	public String ma;
+	public String crossOver;
+	
+	public Stock(String symbol, String date, String open, String high, String low, String close, String volume,
+			String c2)
+	{
+		this.symbol = symbol;
+		this.date = date;
+		this.open = open;
+		this.high = high;
+		this.low = low;
+		this.close = close;
+		this.volume = volume;
+		this.ma = c2;
+	}
+
 	public Stock()
 	{
 		super();
@@ -88,29 +111,6 @@ public class Stock
 		this.ma = c2;
 	}
 
-	public Stock(String symbol, String date, String open, String high, String low, String close, String volume,
-			String c2)
-	{
-		this.symbol = symbol;
-		this.date = date;
-		this.open = open;
-		this.high = high;
-		this.low = low;
-		this.close = close;
-		this.volume = volume;
-		this.ma = c2;
-	}
-
-	public String symbol;
-	public String date;
-	public String open;
-	public String high;
-	public String low;
-	public String close;
-	public String volume;
-	public String ma;
-	public String crossOver;
-
 	public String getMa()
 	{
 		return ma;
@@ -130,4 +130,7 @@ public class Stock
 	{
 		this.crossOver = crossOver;
 	}
+
+
+
 }
